@@ -1,5 +1,16 @@
 # Spam Email Classification
 
+<!-- Live demo badge & CTA -->
+<div align="center">
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-blue?logo=streamlit&style=for-the-badge)](https://spam-email-6jmdv6han65mi36einbpuj.streamlit.app/)
+
+### ▶️ Try the live demo — click the badge above or open:
+
+https://spam-email-6jmdv6han65mi36einbpuj.streamlit.app/
+
+</div>
+
 This project implements a reproducible spam (SMS/email) classification pipeline with a baseline and a stronger tuned pipeline, plus a Streamlit demo app to try predictions locally.
 
 Contents
