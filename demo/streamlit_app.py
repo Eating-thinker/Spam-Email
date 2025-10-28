@@ -8,16 +8,29 @@ import streamlit as st
 @st.cache_resource
 def load_model(path: str):
     data = joblib.load(path)
-    # model stored as dict { 'model': Pipeline }
-    return data.get("model") if isinstance(data, dict) else data
+    # model may be stored in different formats:
+    # - a Pipeline or estimator object (callable with raw text)
+    # - a dict with keys { 'vectorizer': vec, 'model': clf }
+    return data
 
 
 def predict_text(model, text: str):
-    pred = model.predict([text])[0]
-    prob = None
-    if hasattr(model, "predict_proba"):
-        prob = model.predict_proba([text])[0].tolist()
-    return int(pred), prob
+    # Support both Pipeline-like models and dict {vectorizer, model} saved artifacts
+    if isinstance(model, dict):
+        vec = model.get("vectorizer")
+        clf = model.get("model")
+        if vec is None or clf is None:
+            raise ValueError("Model dict missing 'vectorizer' or 'model' keys")
+        X = vec.transform([text])
+        pred = clf.predict(X)[0]
+        prob = clf.predict_proba(X)[0].tolist() if hasattr(clf, "predict_proba") else None
+        return int(pred), prob
+    else:
+        pred = model.predict([text])[0]
+        prob = None
+        if hasattr(model, "predict_proba"):
+            prob = model.predict_proba([text])[0].tolist()
+        return int(pred), prob
 
 
 def main():
