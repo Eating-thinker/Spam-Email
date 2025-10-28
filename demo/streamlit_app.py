@@ -1,11 +1,19 @@
 import json
 from pathlib import Path
 
+import os
+import sys
 import joblib
 import streamlit as st
 import pandas as pd
 import numpy as np
 from collections import Counter
+
+# Ensure the repository root is on sys.path so `ml` can be imported on hosted
+# environments (e.g., Streamlit Cloud) where the package is not installed.
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
 
 from ml.preprocess import clean_text
 
