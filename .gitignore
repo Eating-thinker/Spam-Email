@@ -9,3 +9,7 @@ __pycache__/
 env/
 venv/
 /.pytest_cache/
+
+# Allow committing the demo default model and its metrics
+!ml/results_sample/spam_logreg.joblib
+!ml/results_sample/metrics.json
